@@ -1,0 +1,116 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "My First API",
+        "description": "Writtern by using nodejs and postgre as the database",
+        "url":"http://localhost:3000/"
+    },
+    "host":"localhost:3000",
+    "basePath":"/",
+    "tags":[{
+        "name": "People",
+        "description": "API for people"
+    }],
+    "paths": {
+      "/api/people":{
+        "get": {
+            "tags": ["People"],
+            "summary": "Read All the People Data",
+            "responses": {
+                "200": {
+                    "description": "OK"
+                }
+            }
+        },
+        "post":{
+           "tags": ["People"],
+           "description": "Adding a new person",
+           "parameters":[{
+              "name":"person",
+              "in":"body",
+              "description": "Person object to be posted",
+              "schema":{"$ref":"#/definitions/People"}
+           }],
+           "produces" : ["application/json"],
+           "responses": {
+             "201": {
+                "description": "New person is created",
+                "schema": {"$ref":"#/definitions/People"}
+             }
+           }
+        }
+       
+      },
+
+      "/api/people/{id}": {
+        "parameters": [{
+            "name" : "id",
+            "in":"path",
+            "required" : true,
+            "description": "Sno of the person",
+            "type": "integer"
+         }
+       
+        ],
+        "get": {
+            "summary": "Read person details with given ID",
+            "tags": ["People"],
+            "responses": {
+                "200":{
+                    "description": "User Details",
+                    "schema": {"$ref":"#/definitions/People"}
+                }
+            }
+    },
+    "delete": {
+        "summary": "delete person details with given ID",
+        "tags": ["People"],
+        "responses": {
+            "200":{
+                "description": ":Person Deleted",
+                "schema": {"$ref":"#/definitions/messages"}
+            }
+        }
+     },
+     "put": {
+        "summary": "update person details with given ID",
+        "tags": ["People"],
+        "parameters":[{
+            "name":"person",
+            "in":"body",
+            "description": "Person object to be posted",
+            "schema":{"$ref":"#/definitions/Person"}
+         }],
+        "responses": {
+            "200":{
+                "description": "Person Updated",
+                "schema": {"$ref":"#/definitions/People"}
+            }
+        }
+     }
+    }},
+
+    "definitions": {
+        "People":{
+            "required": ["sno","name","city"],
+            "properties": {
+                "sno": {"type": "integer","uniqueItems":true},
+                "name": {"type": "string"},
+                "city": {"type": "string"}
+            }
+        },
+        "Person":{
+            "required": [],
+            "properties": {
+                "name": {"type": "string"},
+                "city": {"type":"string"}
+            }
+        },
+        "messages": {
+            "properties": {
+                "message": {"type":"string"}
+            }
+        }
+    }
+}
