@@ -2,6 +2,8 @@ var express= require('express')
 var app = express()
 
 var people =require('./routes/people')
+
+var books =require('./routes/books')
 //if a request is post and if the posted data is urlencoded express will decode and parse the request
 
 const swaggerUi = require('swagger-ui-express')
@@ -32,6 +34,7 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 
 app.use('/api',people)
+app.use('/newapi',books)
 
 app.use('/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerDoc))
 
